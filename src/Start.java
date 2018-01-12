@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private int counter1,counter2=0;
+	private Double oldPrin=null;
+	private Double oldPeriod=null;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -54,21 +57,34 @@ public class Start extends HttpServlet {
 	//	resOut.write("Principle: " + principle+"\tPeriod: "+period+"\tRate: "+rate+"\n");
 			
 		double prin;
+		
 		double per;
 		double ratee;
 		if(principle!=null){
 			prin=Double.parseDouble(principle);
-		}else{
+			oldPrin=prin;
+			counter1=1;
+		}else if(counter1==0){
 			prin=Double.parseDouble(this.getServletContext().getInitParameter("principal"));
+			oldPrin=prin;
+			//counter1=0;
+		}else {
+			prin=oldPrin;
 		}
 		
 		resOut.write("<html><br /></html>"+"<html>---------- Monthly Payments ----------<br /></html>");
 		resOut.write("Principal: " + prin+"<html>&emsp;</html>");
 		if(period!=null){
 			per=Double.parseDouble(period);
-		}else{
+			oldPeriod=per;
+			counter2=1;
+		}else if(counter2==0){
 			per=Double.parseDouble(this.getServletContext().getInitParameter("period"));
+			oldPeriod=per;
+		}else {
+			per=oldPeriod;
 		}
+		
 		resOut.write("Period: " + per+"<html>&emsp;</html>");
 		if(rate!=null){
 			ratee=Double.parseDouble(rate);
